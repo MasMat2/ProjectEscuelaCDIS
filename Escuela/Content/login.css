@@ -1,0 +1,31 @@
+﻿body, html{
+    font-family: Consolas;
+    font-size: 18px;
+}
+
+
+#formLogin{
+    width: 50%;
+    margin: 100px auto;
+    border: 1px solid blue;
+    box-shadow: grey 5px 5px;
+    padding-bottom: 20px;
+}
+#imgLogin{
+    content: url("../Images/logo_cdis.jpg");
+    width: 70%;
+    margin: auto;
+}
+
+table{
+    margin: auto;
+}
+
+#btnIngresar{
+    background-color: blue;
+    margin-top: 10px;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    font-size: 20px;
+}
