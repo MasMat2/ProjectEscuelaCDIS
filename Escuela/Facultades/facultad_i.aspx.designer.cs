@@ -132,6 +132,15 @@ namespace Escuela.Facultades
         protected global::System.Web.UI.WebControls.DropDownList ddlCiudad;
 
         /// <summary>
+        /// listBoxMaterias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox listBoxMaterias;
+
+        /// <summary>
         /// btnAgregar control.
         /// </summary>
         /// <remarks>

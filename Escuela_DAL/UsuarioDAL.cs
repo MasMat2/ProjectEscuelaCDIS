@@ -10,30 +10,41 @@ namespace Escuela_DAL
 {
     public class UsuarioDAL
     {
-        public DataTable consultarUsuario(string nombre, string contrasena)
+        EscuelaEntities modelo;
+
+        public UsuarioDAL()
         {
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+            modelo = new EscuelaEntities();
+        }
+        public Usuario consultarUsuario(string nombre, string contrasena)
+        {
+            var usuario = (from mUsuario in modelo.Usuario
+                          where mUsuario.nombre == nombre && mUsuario.contrasena == contrasena
+                          select mUsuario).FirstOrDefault();
 
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_consultarUsuario";
-            command.Connection = connection;
+            return usuario;
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
-            command.Parameters.AddWithValue("pNombre", nombre);
-            command.Parameters.AddWithValue("pContrasena", contrasena);
+            //SqlCommand command = new SqlCommand();
+            //command.CommandType = CommandType.StoredProcedure;
+            //command.CommandText = "sp_consultarUsuario";
+            //command.Connection = connection;
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable dtUsuario = new DataTable();
+            //command.Parameters.AddWithValue("pNombre", nombre);
+            //command.Parameters.AddWithValue("pContrasena", contrasena);
 
-            connection.Open();
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //DataTable dtUsuario = new DataTable();
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dtUsuario);
+            //connection.Open();
 
-            connection.Close();
+            //adapter.SelectCommand = command;
+            //adapter.Fill(dtUsuario);
 
-            return dtUsuario;
+            //connection.Close();
+
+            //return dtUsuario;
         }
     }
 }

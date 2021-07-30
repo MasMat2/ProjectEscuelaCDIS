@@ -10,15 +10,15 @@ namespace Escuela_DAL
 {
     public class AlumnoDAL
     {
-        EscuelaEntities model;
+        EscuelaEntities modelo;
 
         public AlumnoDAL()
         {
-            model = new EscuelaEntities();
+            modelo = new EscuelaEntities();
         }
         public List<object> cargarAlumnos()
         {
-            var alumnos = from mAlumnos in model.Alumno
+            var alumnos = from mAlumnos in modelo.Alumno
                           select new
                           {
                               matricula = mAlumnos.matricula,
@@ -53,8 +53,8 @@ namespace Escuela_DAL
 
         public void agregarAlumno(Alumno pAlumno)
         {
-            model.Alumno.Add(pAlumno);
-            model.SaveChanges();
+            modelo.Alumno.Add(pAlumno);
+            modelo.SaveChanges();
             //SqlConnection connection = new SqlConnection();
             //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
@@ -80,7 +80,7 @@ namespace Escuela_DAL
 
         public Alumno cargarAlumno(int matricula)
         {
-            var alumno = (from mAlumno in model.Alumno
+            var alumno = (from mAlumno in modelo.Alumno
                           where mAlumno.matricula == matricula
                           select mAlumno).FirstOrDefault();
 
@@ -110,7 +110,7 @@ namespace Escuela_DAL
 
         public void modificarAlumno(Alumno pAlumno)
         {
-            var alumno = (from mAlumno in model.Alumno
+            var alumno = (from mAlumno in modelo.Alumno
                           where mAlumno.matricula == pAlumno.matricula
                           select mAlumno).FirstOrDefault();
 
@@ -120,7 +120,7 @@ namespace Escuela_DAL
             alumno.facultad = pAlumno.facultad;
             alumno.ciudad = pAlumno.ciudad;
 
-            model.SaveChanges();
+            modelo.SaveChanges();
             //SqlConnection connection = new SqlConnection();
             //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
@@ -145,12 +145,12 @@ namespace Escuela_DAL
 
         public void eliminarAlumno(int matricula)
         {
-            var alumno = (from mAlumno in model.Alumno
+            var alumno = (from mAlumno in modelo.Alumno
                           where mAlumno.matricula == matricula
                           select mAlumno).FirstOrDefault();
 
-            model.Alumno.Remove(alumno);
-            model.SaveChanges();
+            modelo.Alumno.Remove(alumno);
+            modelo.SaveChanges();
             //SqlConnection connection = new SqlConnection();
             //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 

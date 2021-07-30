@@ -43,14 +43,14 @@ namespace Escuela.Alumnos
         #endregion
 
         #region Methods
-        public DataTable cargarAlumnos()
+        public List<object> cargarAlumnos()
         {
             AlumnoBLL alumBLL = new AlumnoBLL();
-            DataTable dtAlumnos = new DataTable();
+            List<object> listAlumnos; 
 
-            dtAlumnos = alumBLL.cargarAlumnos();
+            listAlumnos = alumBLL.cargarAlumnos();
 
-            return dtAlumnos;
+            return listAlumnos;
         }
 
         public bool sessionIniciada()

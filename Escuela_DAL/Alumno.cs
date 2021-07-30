@@ -14,6 +14,11 @@ namespace Escuela_DAL
     
     public partial class Alumno
     {
+        public Alumno()
+        {
+            this.MateriaAlumno = new HashSet<MateriaAlumno>();
+        }
+    
         public int matricula { get; set; }
         public string nombre { get; set; }
         public System.DateTime fechaNacimiento { get; set; }
@@ -23,5 +28,6 @@ namespace Escuela_DAL
     
         public virtual Ciudad Ciudad1 { get; set; }
         public virtual Facultad Facultad1 { get; set; }
+        public virtual ICollection<MateriaAlumno> MateriaAlumno { get; set; }
     }
 }

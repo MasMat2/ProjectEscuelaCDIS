@@ -10,7 +10,7 @@ namespace Escuela_BLL
 {
     public class PaisBLL
     {
-        public DataTable cargarPaises()
+        public List<Pais> cargarPaises()
         {
             PaisDAL pais = new PaisDAL();
             return pais.cargarPaises();

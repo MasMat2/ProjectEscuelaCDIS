@@ -4,20 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1a31ae1901214125bfd556f9a57f9f66" Name="Diagram1">
-        <EntityTypeShape EntityType="EscuelaModel.Alumno" Width="1.5" PointX="7.5" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Ciudad" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Estado" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Facultad" Width="1.5" PointX="10.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Pais" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Universidad" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EscuelaModel.Usuario" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+      <Diagram DiagramId="7bacba03a096426c9c813819ea6d828f" Name="Diagram1">
+        <EntityTypeShape EntityType="EscuelaModel.Alumno" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Ciudad" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Estado" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Facultad" Width="1.5" PointX="10.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Materia" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.MateriaAlumno" Width="1.5" PointX="12.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.MateriaFacultad" Width="1.5" PointX="12.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Pais" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Universidad" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EscuelaModel.Usuario" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="EscuelaModel.FK_Alumno_Ciudad" ManuallyRouted="false" />
         <AssociationConnector Association="EscuelaModel.FK_Alumno_Facultad" ManuallyRouted="false" />
+        <AssociationConnector Association="EscuelaModel.FK_MateriaAlumno_Alumno" ManuallyRouted="false" />
         <AssociationConnector Association="EscuelaModel.FK_Ciudad_Estado" ManuallyRouted="false" />
         <AssociationConnector Association="EscuelaModel.FK_Facultad_Ciudad" ManuallyRouted="false" />
         <AssociationConnector Association="EscuelaModel.FK_Estado_Pais" ManuallyRouted="false" />
         <AssociationConnector Association="EscuelaModel.FK_Facultad_Universidad" ManuallyRouted="false" />
+        <AssociationConnector Association="EscuelaModel.FK_MateriaFacultad_Facultad" ManuallyRouted="false" />
+        <AssociationConnector Association="EscuelaModel.FK_MateriaAlumno_Materia" ManuallyRouted="false" />
+        <AssociationConnector Association="EscuelaModel.FK_MateriaFacultad_Materia" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

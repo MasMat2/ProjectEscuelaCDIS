@@ -1,6 +1,10 @@
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\bin\Debug\Escuela_DAL.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\bin\Debug\Escuela_DAL.pdb
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.csproj.AssemblyReference.cache
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.csproj.CoreCompileInputs.cache
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.pdb
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\bin\Debug\Escuela_DAL.dll.config
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\bin\Debug\EntityFramework.dll
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\bin\Debug\EntityFramework.xml
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.csproj.CopyComplete
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela_DAL\obj\Debug\Escuela_DAL.csproj.AssemblyReference.cache

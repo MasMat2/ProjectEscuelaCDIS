@@ -48,46 +48,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alumno.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlumnoDAL.cs" />
+    <Compile Include="Ciudad.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="CiudadDAL.cs" />
     <Compile Include="Escuela.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Escuela.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Escuela.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="Escuela.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Escuela.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Estado.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="EstadoDAL.cs" />
+    <Compile Include="Facultad.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="FacultadDAL.cs" />
+    <Compile Include="Materia.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaAlumno.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaAlumnoDAL.cs" />
+    <Compile Include="MateriaDAL.cs" />
+    <Compile Include="MateriaFacultad.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MateriaFacultadDAL.cs" />
+    <Compile Include="Pais.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="PaisDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Universidad.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="UniversidadDAL.cs" />
+    <Compile Include="Usuario.cs">
+      <DependentUpon>Escuela.tt</DependentUpon>
+    </Compile>
     <Compile Include="UsuarioDAL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="Escuela.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Escuela.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="Escuela.edmx.diagram">
       <DependentUpon>Escuela.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Escuela.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Escuela.Context.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Escuela.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Escuela.edmx</DependentUpon>
+      <LastGenOutput>Escuela.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Escuela.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Escuela.edmx</DependentUpon>
+      <LastGenOutput>Escuela.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

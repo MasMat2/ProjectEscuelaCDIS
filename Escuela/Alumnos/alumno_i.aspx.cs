@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
+using System.Globalization;
 
 namespace Escuela.Alumnos
 {
@@ -21,6 +23,8 @@ namespace Escuela.Alumnos
                 {
                     cargarFacultades();
                     cargarEstados();
+                    cargarCiudades();
+                    cargarMaterias();
                     cargarTabla();
                 }
                 else
@@ -52,21 +56,37 @@ namespace Escuela.Alumnos
 
             AlumnoBLL alumBLL = new AlumnoBLL();
 
-            int matricula = int.Parse(txtMatricula.Text);
-            string nombre = txtNombre.Text;
-            DateTime fecha = Convert.ToDateTime(txtFechaNacimiento.Text);
-            int semestre = int.Parse(txtSemestre.Text);
-            int facultad = int.Parse(ddlFacultad.SelectedValue);
-            int ciudad = int.Parse(ddlCiudad.SelectedValue);
+            Alumno alumno = new Alumno();
+            alumno.matricula = int.Parse(txtMatricula.Text);
+            alumno.nombre = txtNombre.Text;
+            alumno.fechaNacimiento = DateTime.ParseExact(txtFechaNacimiento.Text, "dd-MM-yyyy", CultureInfo.InvariantCulture);;
+            alumno.semestre = int.Parse(txtSemestre.Text);
+            alumno.facultad = int.Parse(ddlFacultad.SelectedValue);
+            alumno.ciudad = int.Parse(ddlCiudad.SelectedValue);
 
             try
             {
-                alumBLL.agregarAlumno(matricula, nombre, fecha, semestre, facultad, ciudad);
+
+                MateriaAlumno materiaAlumno;
+                List<MateriaAlumno> listMaterias = new List<MateriaAlumno>();
+
+                foreach(ListItem item in listBoxMaterias.Items)
+                {
+                    if (item.Selected)
+                    {
+                        materiaAlumno = new MateriaAlumno();
+                        materiaAlumno.materia = int.Parse(item.Value);
+                        materiaAlumno.alumno = alumno.matricula;
+                        listMaterias.Add(materiaAlumno);
+                    }
+                }
+
+                alumBLL.agregarAlumno(alumno, listMaterias);
                 limpiarCampos();
 
                 DataTable dtAlumnos = new DataTable();
                 dtAlumnos = (DataTable) ViewState["tablaAlumnos"];
-                dtAlumnos.Rows.Add(matricula, nombre);
+                dtAlumnos.Rows.Add(alumno.matricula, alumno.nombre);
                 grd_alumnos.DataSource = dtAlumnos;
                 grd_alumnos.DataBind();
 
@@ -80,11 +100,11 @@ namespace Escuela.Alumnos
         public void cargarFacultades()
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultades = new DataTable();
+            List<object> listFacultades;
 
-            dtFacultades = facuBLL.cargarFacultades();
+            listFacultades = facuBLL.cargarFacultades();
 
-            ddlFacultad.DataSource = dtFacultades;
+            ddlFacultad.DataSource = listFacultades;
             ddlFacultad.DataTextField = "nombre";
             ddlFacultad.DataValueField = "ID_Facultad";
             ddlFacultad.DataBind();
@@ -95,11 +115,11 @@ namespace Escuela.Alumnos
         public void cargarEstados()
         {
             EstadoBLL estadoBLL = new EstadoBLL();
-            DataTable dtEstados = new DataTable();
+            List<Estado> listEstados;
 
-            dtEstados = estadoBLL.cargarEstados();
+            listEstados = estadoBLL.cargarEstados();
 
-            ddlEstado.DataSource = dtEstados;
+            ddlEstado.DataSource = listEstados;
             ddlEstado.DataTextField = "nombre";
             ddlEstado.DataValueField = "ID_Estado";
             ddlEstado.DataBind();
@@ -110,17 +130,30 @@ namespace Escuela.Alumnos
         public void cargarCiudades()
         {
             CiudadBLL ciudadBLL = new CiudadBLL();
-            DataTable dtCiudades = new DataTable();
+            List<Ciudad> listCiudades;
 
-            dtCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
+            listCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
 
-            ddlCiudad.DataSource = dtCiudades;
+            ddlCiudad.DataSource = listCiudades;
             ddlCiudad.DataTextField = "nombre";
             ddlCiudad.DataValueField = "ID_Ciudad";
             ddlCiudad.DataBind();
 
             ddlCiudad.Items.Insert(0, new ListItem(String.Format("{0} Selecione Ciudad {0}", new String('-', 4)), "0"));
 
+        }
+
+        public void cargarMaterias()
+        {
+            MateriaBLL materia = new MateriaBLL();
+            List<Materia> listMaterias;
+
+            listMaterias = materia.cargarMaterias();
+
+            listBoxMaterias.DataSource = listMaterias;
+            listBoxMaterias.DataTextField = "nombre";
+            listBoxMaterias.DataValueField = "ID_Materia";
+            listBoxMaterias.DataBind();
         }
         #endregion
 
@@ -132,6 +165,9 @@ namespace Escuela.Alumnos
             txtFechaNacimiento.Text = "";
             txtSemestre.Text = "";
             ddlFacultad.SelectedValue = "0";
+            cargarEstados();
+            cargarCiudades();
+            cargarMaterias();
 
         }
 

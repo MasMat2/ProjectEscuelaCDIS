@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="alumno_i.aspx.cs" Inherits="Escuela.Alumnos.alumno_i" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="alumno_i.aspx.cs" Inherits="Escuela.Alumnos.alumno_i" Culture="es-MX" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -27,7 +27,7 @@
                 <tr>
                     <td>Fecha de Nacimiento: </td>
                     <td>
-                        <asp:TextBox ID="txtFechaNacimiento" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaNacimiento" runat="server" autocomplete="off"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfv_fecha" runat="server"
                             ErrorMessage="La fecha es requerida" ControlToValidate="txtFechaNacimiento" ValidationGroup="vlg1" Display="Dynamic"></asp:RequiredFieldValidator>
                         <asp:CompareValidator ID="cv_fecha" runat="server"
@@ -60,8 +60,9 @@
                 <tr>
                     <td>Estado: </td>
                     <td>
-                        <asp:DropDownList ID="ddlEstado" runat="server" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged" 
-                            AutoPostBack="true" CssClass="lista"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlEstado" runat="server" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged"
+                            AutoPostBack="true" CssClass="lista">
+                        </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>
@@ -70,16 +71,19 @@
                         <asp:DropDownList ID="ddlCiudad" runat="server" AutoPostBack="true" CssClass="lista"></asp:DropDownList>
                     </td>
                 </tr>
-                <tr>
-                    <td></td>
+                 <tr>
+                    <td>Materias: </td>
                     <td>
-                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" ValidationGroup="vlg1" />
+                        <asp:ListBox ID="listBoxMaterias" runat="server" SelectionMode="Multiple" CssClass="lista" Width="150px"></asp:ListBox>
                     </td>
                 </tr>
             </table>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <asp:GridView ID="grd_alumnos" runat="server" AutoGenerateColumns="false" CssClass="table">
+
+    <asp:Button ID="Button1" runat="server" Text="Agregar" OnClick="btnAgregar_Click" ValidationGroup="vlg1" />
+
+    <asp:GridView ID="grd_alumnos" runat="server" AutoGenerateColumns="false" CssClass="table table-bordered custom_tables">
         <Columns>
             <asp:BoundField HeaderText="Matricula" DataField="matricula" />
             <asp:BoundField HeaderText="Nombre" DataField="nombre" />

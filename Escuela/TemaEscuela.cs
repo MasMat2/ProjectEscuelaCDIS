@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Escuela_DAL;
 
 namespace Escuela
 {
@@ -10,12 +11,13 @@ namespace Escuela
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if(Session["usuario"] != null)
+            Session["usuario"] = new Usuario();
+            if (Session["usuario"] != null)
             {
-                DataTable dtUsuario = new DataTable();
-                dtUsuario = (DataTable)Session["usuario"];
+                Usuario usuarioObject;
+                usuarioObject = (Usuario) Session["usuario"];
 
-                string tipo = dtUsuario.Rows[0]["tipo"].ToString();
+                string tipo = usuarioObject.tipo;
 
                 if(tipo == "Administrator")
                 {

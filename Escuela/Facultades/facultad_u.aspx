@@ -50,14 +50,19 @@
                         <asp:DropDownList ID="ddlCiudad" runat="server" AutoPostBack="true" CssClass="lista"></asp:DropDownList>
                     </td>
                 </tr>
+                <tr>
+                    <td>Materias: </td>
+                    <td>
+                        <asp:ListBox ID="listBoxMaterias" runat="server" SelectionMode="Multiple" CssClass="lista" Width="150px"></asp:ListBox>
+                    </td>
+                </tr>
 
             </table>
-
-            <asp:Button ID="btnEditar" runat="server" Text="Editar" OnClick="btnEditar_Click" />
-
         </ContentTemplate>
-
     </asp:UpdatePanel>
+
+    <asp:Button ID="btnEditar" runat="server" Text="Editar" OnClick="btnEditar_Click" />
+
     <script type="text/javascript">
         $(document).ready(function () {
 

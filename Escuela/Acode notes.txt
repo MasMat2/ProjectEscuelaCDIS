@@ -1,0 +1,1 @@
+﻿check if you can access object atribute of data source in datafield on boundfield

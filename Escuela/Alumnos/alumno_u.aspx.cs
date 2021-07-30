@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
 
 namespace Escuela.Alumnos
 {
@@ -52,31 +53,40 @@ namespace Escuela.Alumnos
         public void cargarAlumno(int matricula)
         {
             AlumnoBLL alumBLL = new AlumnoBLL();
-            DataTable dtAlumno = new DataTable();
+            Alumno alumno = new Alumno();
 
-            dtAlumno = alumBLL.cargarAlumno(matricula);
+            alumno = alumBLL.cargarAlumno(matricula);
 
-            lblMatricula.Text = dtAlumno.Rows[0]["matricula"].ToString();
-            txtNombre.Text = dtAlumno.Rows[0]["nombre"].ToString();
-            txtFechaNacimiento.Text = dtAlumno.Rows[0]["fechaNacimiento"].ToString().Substring(0,10);
-            txtSemestre.Text = dtAlumno.Rows[0]["semestre"].ToString();
-            ddlFacultad.SelectedValue = dtAlumno.Rows[0]["facultad"].ToString();
+            lblMatricula.Text = alumno.matricula.ToString();
+            txtNombre.Text = alumno.nombre;
+            txtFechaNacimiento.Text = alumno.fechaNacimiento.ToString("dd-MM-yyy");
+            txtSemestre.Text = alumno.semestre.ToString();
+            ddlFacultad.SelectedValue = alumno.facultad.ToString();
 
             cargarEstados();
-            ddlEstado.SelectedValue = dtAlumno.Rows[0]["estado"].ToString();
+            ddlEstado.SelectedValue = alumno.Ciudad1.ToString();
 
             cargarCiudades();
-            ddlCiudad.SelectedValue = dtAlumno.Rows[0]["ciudad"].ToString();
+            ddlCiudad.SelectedValue = alumno.ciudad.ToString();
+
+            cargarMaterias();
+            List<MateriaAlumno> listMateriaAlumno;
+            listMateriaAlumno = alumno.MateriaAlumno.ToList();
+
+            foreach(MateriaAlumno materiaAlumno in listMateriaAlumno)
+            {
+                listBoxMaterias.Items.FindByValue(materiaAlumno.materia.ToString()).Selected = true;
+            }
         }
 
         public void cargarFacultades()
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultades = new DataTable();
+            List<object> listFacultades;
 
-            dtFacultades = facuBLL.cargarFacultades();
+            listFacultades = facuBLL.cargarFacultades();
 
-            ddlFacultad.DataSource = dtFacultades;
+            ddlFacultad.DataSource = listFacultades;
             ddlFacultad.DataTextField = "nombre";
             ddlFacultad.DataValueField = "ID_Facultad";
             ddlFacultad.DataBind();
@@ -88,26 +98,43 @@ namespace Escuela.Alumnos
         public void modificarAlumno()
         {
             AlumnoBLL alumBLL = new AlumnoBLL();
+            Alumno alumno = new Alumno();
 
-            int matricula = int.Parse(lblMatricula.Text);
-            string nombre = txtNombre.Text;
-            DateTime fecha = Convert.ToDateTime(txtFechaNacimiento.Text);
-            int semestre = int.Parse(txtSemestre.Text);
-            int facultad = int.Parse(ddlFacultad.SelectedValue);
-            int ciudad = int.Parse(ddlCiudad.SelectedValue);
+            alumno.matricula = int.Parse(lblMatricula.Text);
+            alumno.nombre = txtNombre.Text;
+            alumno.fechaNacimiento = Convert.ToDateTime(txtFechaNacimiento.Text);
+            alumno.semestre = int.Parse(txtSemestre.Text);
+            alumno.facultad = int.Parse(ddlFacultad.SelectedValue);
+            alumno.ciudad = int.Parse(ddlCiudad.SelectedValue);
 
-            alumBLL.modificarAlumno(matricula, nombre, fecha, semestre, facultad, ciudad);
+
+            MateriaAlumno materiaAlumno;
+            List<MateriaAlumno> listMaterias = new List<MateriaAlumno>();
+
+            foreach (ListItem item in listBoxMaterias.Items)
+            {
+                if (item.Selected)
+                {
+                    materiaAlumno = new MateriaAlumno();
+                    materiaAlumno.materia = int.Parse(item.Value);
+                    materiaAlumno.alumno = alumno.matricula;
+                    listMaterias.Add(materiaAlumno);
+                }
+            }
+
+
+            alumBLL.modificarAlumno(alumno, listMaterias);
 
         }
 
         public void cargarEstados()
         {
             EstadoBLL estadoBLL = new EstadoBLL();
-            DataTable dtEstados = new DataTable();
+            List<Estado> listEstados;
 
-            dtEstados = estadoBLL.cargarEstados();
+            listEstados = estadoBLL.cargarEstados();
 
-            ddlEstado.DataSource = dtEstados;
+            ddlEstado.DataSource = listEstados;
             ddlEstado.DataTextField = "nombre";
             ddlEstado.DataValueField = "ID_Estado";
             ddlEstado.DataBind();
@@ -118,17 +145,30 @@ namespace Escuela.Alumnos
         public void cargarCiudades()
         {
             CiudadBLL ciudadBLL = new CiudadBLL();
-            DataTable dtCiudades = new DataTable();
+            List<Ciudad> listCiudades;
 
-            dtCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
+            listCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
 
-            ddlCiudad.DataSource = dtCiudades;
+            ddlCiudad.DataSource = listCiudades;
             ddlCiudad.DataTextField = "nombre";
             ddlCiudad.DataValueField = "ID_Ciudad";
             ddlCiudad.DataBind();
 
             ddlCiudad.Items.Insert(0, new ListItem(String.Format("{0} Selecione Ciudad {0}", new String('-', 4)), "0"));
 
+        }
+
+        public void cargarMaterias()
+        {
+            MateriaBLL materia = new MateriaBLL();
+            List<Materia> listMaterias;
+
+            listMaterias = materia.cargarMaterias();
+
+            listBoxMaterias.DataSource = listMaterias;
+            listBoxMaterias.DataTextField = "nombre";
+            listBoxMaterias.DataValueField = "ID_Materia";
+            listBoxMaterias.DataBind();
         }
         #endregion
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
 
 namespace Escuela.Facultades
 {
@@ -60,29 +62,38 @@ namespace Escuela.Facultades
         public void cargarFacultad(string codigo)
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultad =  facuBLL.cargarFacultad(codigo);
+            Facultad facultad =  facuBLL.cargarFacultad(codigo);
 
-            lblCodigo.Text = dtFacultad.Rows[0]["codigo"].ToString();
-            txtNombre.Text = dtFacultad.Rows[0]["nombre"].ToString();
-            txtFechaCreacion.Text = Convert.ToDateTime(dtFacultad.Rows[0]["fechaCreacion"]).ToString("dd/MM/yyyy");
-            ddlUniversidad.SelectedValue = dtFacultad.Rows[0]["universidad"].ToString();
+            lblCodigo.Text = facultad.codigo.ToString();
+            txtNombre.Text = facultad.nombre;
+            txtFechaCreacion.Text = Convert.ToDateTime(facultad.fechaCreacion).ToString("dd-MM-yyyy");
+            ddlUniversidad.SelectedValue = facultad.universidad.ToString();
             cargarPaises();
-            ddlPais.SelectedValue = dtFacultad.Rows[0]["pais"].ToString();
+            ddlPais.SelectedValue = facultad.Ciudad1.Estado1.pais.ToString();
             cargarEstados();
-            ddlEstado.SelectedValue = dtFacultad.Rows[0]["estado"].ToString();
+            ddlEstado.SelectedValue = facultad.Ciudad1.estado.ToString();
             cargarCiudades();
-            ddlCiudad.SelectedValue = dtFacultad.Rows[0]["ciudad"].ToString();
+            ddlCiudad.SelectedValue = facultad.ciudad.ToString();
+
+            cargarMaterias();
+            List<MateriaFacultad> listMateriaFacultad;
+            listMateriaFacultad = facultad.MateriaFacultad.ToList();
+
+            foreach (MateriaFacultad materiaFacultad in listMateriaFacultad)
+            {
+                listBoxMaterias.Items.FindByValue(materiaFacultad.materia.ToString()).Selected = true;
+            }
 
         }
            
         public void cargarUniversidades()
         {
             UniversidadBLL uniBLL = new UniversidadBLL();
-            DataTable dtUniversidades = new DataTable();
+            List<Universidad> listUniversidad;
 
-            dtUniversidades = uniBLL.cargarUniversidades();
+            listUniversidad = uniBLL.cargarUniversidades();
 
-            ddlUniversidad.DataSource = dtUniversidades;
+            ddlUniversidad.DataSource = listUniversidad;
             ddlUniversidad.DataTextField = "nombre";
             ddlUniversidad.DataValueField = "ID_Universidad";
             ddlUniversidad.DataBind();
@@ -93,24 +104,26 @@ namespace Escuela.Facultades
         public void modificarFacultad()
         {
             FacultadBLL facuBLL = new FacultadBLL();
+            Facultad facultadObject = new Facultad();
 
-            string codigo = lblCodigo.Text;
-            string nombre = txtNombre.Text;
-            DateTime fecha = Convert.ToDateTime(txtFechaCreacion.Text);
-            int universidad = int.Parse(ddlUniversidad.SelectedValue);
+            facultadObject.codigo = lblCodigo.Text;
+            facultadObject.nombre = txtNombre.Text;
+            facultadObject.fechaCreacion = DateTime.ParseExact(txtFechaCreacion.Text, "dd-MM-yyyy", CultureInfo.InvariantCulture);;
+            facultadObject.universidad = int.Parse(ddlUniversidad.SelectedValue);
+            facultadObject.ciudad = int.Parse(ddlCiudad.SelectedValue);
 
 
-            facuBLL.modificarFacultad(codigo, nombre, fecha, universidad);
+            facuBLL.modificarFacultad(facultadObject);
         }
 
         public void cargarPaises()
         {
             PaisBLL paisBLL = new PaisBLL();
-            DataTable dtPaises = new DataTable();
+            List<Pais> listPais;
 
-            dtPaises = paisBLL.cargarPaises();
+            listPais = paisBLL.cargarPaises();
 
-            ddlPais.DataSource = dtPaises;
+            ddlPais.DataSource = listPais;
             ddlPais.DataTextField = "nombre";
             ddlPais.DataValueField = "ID_Pais";
             ddlPais.DataBind();
@@ -120,11 +133,11 @@ namespace Escuela.Facultades
         public void cargarEstados()
         {
             EstadoBLL estadoBLL = new EstadoBLL();
-            DataTable dtEstados = new DataTable();
+            List<Estado> listEstado;
 
-            dtEstados = estadoBLL.cargarEstadosPorPais(int.Parse(ddlPais.SelectedValue));
+            listEstado = estadoBLL.cargarEstadosPorPais(int.Parse(ddlPais.SelectedValue));
 
-            ddlEstado.DataSource = dtEstados;
+            ddlEstado.DataSource = listEstado;
             ddlEstado.DataTextField = "nombre";
             ddlEstado.DataValueField = "ID_Estado";
             ddlEstado.DataBind();
@@ -135,17 +148,30 @@ namespace Escuela.Facultades
         public void cargarCiudades()
         {
             CiudadBLL ciudadBLL = new CiudadBLL();
-            DataTable dtCiudades = new DataTable();
+            List<Ciudad> listCiudades;
 
-            dtCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
+            listCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
 
-            ddlCiudad.DataSource = dtCiudades;
+            ddlCiudad.DataSource = listCiudades;
             ddlCiudad.DataTextField = "nombre";
             ddlCiudad.DataValueField = "ID_Ciudad";
             ddlCiudad.DataBind();
 
             ddlCiudad.Items.Insert(0, new ListItem(String.Format("{0} Selecione Ciudad {0}", new String('-', 4)), "0"));
 
+        }
+
+        public void cargarMaterias()
+        {
+            MateriaBLL materia = new MateriaBLL();
+            List<Materia> listMaterias;
+
+            listMaterias = materia.cargarMaterias();
+
+            listBoxMaterias.DataSource = listMaterias;
+            listBoxMaterias.DataTextField = "nombre";
+            listBoxMaterias.DataValueField = "ID_Materia";
+            listBoxMaterias.DataBind();
         }
         #endregion
         public bool sessionIniciada()

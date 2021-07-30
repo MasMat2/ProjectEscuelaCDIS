@@ -17,6 +17,7 @@ namespace Escuela_DAL
         public Facultad()
         {
             this.Alumno = new HashSet<Alumno>();
+            this.MateriaFacultad = new HashSet<MateriaFacultad>();
         }
     
         public int ID_Facultad { get; set; }
@@ -29,5 +30,6 @@ namespace Escuela_DAL
         public virtual ICollection<Alumno> Alumno { get; set; }
         public virtual Ciudad Ciudad1 { get; set; }
         public virtual Universidad Universidad1 { get; set; }
+        public virtual ICollection<MateriaFacultad> MateriaFacultad { get; set; }
     }
 }

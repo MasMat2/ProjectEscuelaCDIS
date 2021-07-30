@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
 
 namespace Escuela
 {
@@ -37,13 +38,13 @@ namespace Escuela
             bool acceso = false;
 
             UsuarioBLL userBLL = new UsuarioBLL();
-            DataTable dtUsuario = new DataTable();
+            Usuario usuarioObject;
 
-            dtUsuario = userBLL.consultarUsuario(txtUsuario.Text, txtContrasena.Text);
+            usuarioObject = userBLL.consultarUsuario(txtUsuario.Text, txtContrasena.Text);
 
-            if(dtUsuario.Rows.Count > 0)
+            if(usuarioObject != null)
             {
-                Session["usuario"] = dtUsuario;
+                Session["usuario"] = usuarioObject;
                 acceso = true;
             }
 

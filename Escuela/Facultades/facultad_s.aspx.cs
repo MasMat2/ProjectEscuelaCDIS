@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
-
+using Escuela_DAL;
 
 namespace Escuela.Facultades
 {
@@ -42,14 +42,14 @@ namespace Escuela.Facultades
         #endregion
 
         #region Methods
-        public DataTable cargarFacultades()
+        public List<object> cargarFacultades()
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultades = new DataTable();
+            List<object> listFacultades;
 
-            dtFacultades = facuBLL.cargarFacultades();
+            listFacultades = facuBLL.cargarFacultades();
 
-            return dtFacultades;
+            return listFacultades;
         }
         public bool sessionIniciada()
         {

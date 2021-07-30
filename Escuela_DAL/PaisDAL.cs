@@ -10,27 +10,41 @@ namespace Escuela_DAL
 {
     public class PaisDAL
     {
-        public DataTable cargarPaises()
+        EscuelaEntities modelo;
+
+        public PaisDAL()
         {
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+            modelo = new EscuelaEntities();
+        }
 
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_cargarPaises";
-            command.Connection = connection;
+        public List<Pais> cargarPaises()
+        {
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable dtPaises = new DataTable();
+            var paises = from mPais in modelo.Pais
+                          select mPais;
 
-            connection.Open();
+            return paises.AsEnumerable<Pais>().ToList();
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dtPaises);
 
-            connection.Close();
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
-            return dtPaises;
+            //SqlCommand command = new SqlCommand();
+            //command.CommandType = CommandType.StoredProcedure;
+            //command.CommandText = "sp_cargarPaises";
+            //command.Connection = connection;
+
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //DataTable dtPaises = new DataTable();
+
+            //connection.Open();
+
+            //adapter.SelectCommand = command;
+            //adapter.Fill(dtPaises);
+
+            //connection.Close();
+
+            //return dtPaises;
         }
     }
 }

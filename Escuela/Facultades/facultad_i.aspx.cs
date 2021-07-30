@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
 
 namespace Escuela.Facultades
 {
@@ -21,6 +22,9 @@ namespace Escuela.Facultades
                 {
                     cargarUniversidades();
                     cargarPaises();
+                    cargarEstados();
+                    cargarCiudades();
+                    cargarMaterias();
                     cargarTabla();
                 }
                 else
@@ -60,22 +64,38 @@ namespace Escuela.Facultades
         public void agregarFacultad()
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultades = new DataTable();
-
-            string codigo = txtCodigo.Text;
-            string nombre = txtNombre.Text;
-            DateTime fecha = DateTime.ParseExact(txtFechaCreacion.Text, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            int universidad = int.Parse(ddlUniversidad.SelectedValue);
-            int ciudad = int.Parse(ddlCiudad.SelectedValue);
+            
+            Facultad facultadObject = new Facultad();
+            facultadObject.codigo = txtCodigo.Text;
+            facultadObject.nombre = txtNombre.Text;
+            facultadObject.fechaCreacion = DateTime.ParseExact(txtFechaCreacion.Text, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            facultadObject.universidad = int.Parse(ddlUniversidad.SelectedValue);
+            facultadObject.ciudad = int.Parse(ddlCiudad.SelectedValue);
 
             try
             {
-                facuBLL.agregarFacultad(codigo, nombre, fecha, universidad, ciudad);
+
+                MateriaFacultad materiaFacultad;
+                List<MateriaFacultad> listMateriaFacultad = new List<MateriaFacultad>();
+
+                foreach (ListItem item in listBoxMaterias.Items)
+                {
+                    if (item.Selected)
+                    {
+                        materiaFacultad = new MateriaFacultad();
+                        materiaFacultad.materia = int.Parse(item.Value);
+                        //obtener id de facultad
+                        //materiaFacultad.facultad = int.Parse(facultad.codigo);
+                        listMateriaFacultad.Add(materiaFacultad);
+                    }
+                }
+
+                facuBLL.agregarFacultad(facultadObject, listMateriaFacultad);
                 limpiarCampos();
 
                 DataTable dtAlumnos = new DataTable();
                 dtAlumnos = (DataTable)ViewState["tablaFacultades"];
-                dtAlumnos.Rows.Add(codigo, nombre);
+                dtAlumnos.Rows.Add(facultadObject.codigo, facultadObject.nombre);
                 grd_facultades.DataSource = dtAlumnos;
                 grd_facultades.DataBind();
             }
@@ -88,12 +108,12 @@ namespace Escuela.Facultades
 
         public void cargarUniversidades()
         {
-            UniversidadBLL facuBLL = new UniversidadBLL();
-            DataTable dtUniversidades = new DataTable();
+            UniversidadBLL uniBLL = new UniversidadBLL();
+            List<Universidad> listUniversidad;
 
-            dtUniversidades = facuBLL.cargarUniversidades();
+            listUniversidad = uniBLL.cargarUniversidades();
 
-            ddlUniversidad.DataSource = dtUniversidades;
+            ddlUniversidad.DataSource = listUniversidad;
             ddlUniversidad.DataTextField = "nombre";
             ddlUniversidad.DataValueField = "ID_Universidad";
             ddlUniversidad.DataBind();
@@ -104,11 +124,11 @@ namespace Escuela.Facultades
         public void cargarPaises()
         {
             PaisBLL paisBLL = new PaisBLL();
-            DataTable dtPaises = new DataTable();
+            List<Pais> listPais;
 
-            dtPaises = paisBLL.cargarPaises();
+            listPais = paisBLL.cargarPaises();
 
-            ddlPais.DataSource = dtPaises;
+            ddlPais.DataSource = listPais;
             ddlPais.DataTextField = "nombre";
             ddlPais.DataValueField = "ID_Pais";
             ddlPais.DataBind();
@@ -118,11 +138,11 @@ namespace Escuela.Facultades
         public void cargarEstados()
         {
             EstadoBLL estadoBLL = new EstadoBLL();
-            DataTable dtEstados = new DataTable();
+            List<Estado> listEstado;
 
-            dtEstados = estadoBLL.cargarEstadosPorPais(int.Parse(ddlPais.SelectedValue));
+            listEstado = estadoBLL.cargarEstadosPorPais(int.Parse(ddlPais.SelectedValue));
 
-            ddlEstado.DataSource = dtEstados;
+            ddlEstado.DataSource = listEstado;
             ddlEstado.DataTextField = "nombre";
             ddlEstado.DataValueField = "ID_Estado";
             ddlEstado.DataBind();
@@ -133,17 +153,30 @@ namespace Escuela.Facultades
         public void cargarCiudades()
         {
             CiudadBLL ciudadBLL = new CiudadBLL();
-            DataTable dtCiudades = new DataTable();
+            List<Ciudad> listCiudades;
 
-            dtCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
+            listCiudades = ciudadBLL.cargarCiudadesPorEstado(int.Parse(ddlEstado.SelectedValue));
 
-            ddlCiudad.DataSource = dtCiudades;
+            ddlCiudad.DataSource = listCiudades;
             ddlCiudad.DataTextField = "nombre";
             ddlCiudad.DataValueField = "ID_Ciudad";
             ddlCiudad.DataBind();
 
             ddlCiudad.Items.Insert(0, new ListItem(String.Format("{0} Selecione Ciudad {0}", new String('-', 4)), "0"));
 
+        }
+
+        public void cargarMaterias()
+        {
+            MateriaBLL materia = new MateriaBLL();
+            List<Materia> listMaterias;
+
+            listMaterias = materia.cargarMaterias();
+
+            listBoxMaterias.DataSource = listMaterias;
+            listBoxMaterias.DataTextField = "nombre";
+            listBoxMaterias.DataValueField = "ID_Materia";
+            listBoxMaterias.DataBind();
         }
         #endregion
 

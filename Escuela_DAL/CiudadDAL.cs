@@ -10,29 +10,41 @@ namespace Escuela_DAL
 {
     public class CiudadDAL
     {
-        public DataTable cargarCiudadesPorEstado(int estado)
+
+        EscuelaEntities modelo;
+
+        public CiudadDAL()
         {
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+            modelo = new EscuelaEntities();
+        }
+        public List<Ciudad> cargarCiudadesPorEstado(int estado)
+        {
+            var ciudades = from mCiudad in modelo.Ciudad
+                            where mCiudad.estado == estado
+                            select mCiudad;
 
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_cargarCiudadesPorEstado";
-            command.Connection = connection;
+            return ciudades.AsEnumerable<Ciudad>().ToList();
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
-            command.Parameters.AddWithValue("pEstado", estado);
+            //SqlCommand command = new SqlCommand();
+            //command.CommandType = CommandType.StoredProcedure;
+            //command.CommandText = "sp_cargarCiudadesPorEstado";
+            //command.Connection = connection;
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable dtCiudades = new DataTable();
+            //command.Parameters.AddWithValue("pEstado", estado);
 
-            connection.Open();
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //DataTable dtCiudades = new DataTable();
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dtCiudades);
+            //connection.Open();
 
-            connection.Close();
+            //adapter.SelectCommand = command;
+            //adapter.Fill(dtCiudades);
 
-            return dtCiudades;
+            //connection.Close();
+
+            //return dtCiudades;
         }
     }
 }

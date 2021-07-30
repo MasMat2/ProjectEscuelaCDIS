@@ -33,10 +33,33 @@
             </td>
         </tr>
         <tr>
-            <td></td>
+            <td>Materias: </td>
             <td>
-                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
+                <asp:ListBox ID="listBoxMaterias" runat="server" SelectionMode="Multiple" CssClass="lista" Width="150px"></asp:ListBox>
             </td>
         </tr>
     </table>
+    <asp:Button ID="Button1" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function load_plugins() {
+                $("#MainContent_txtFechaNacimiento").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "1960:2008",
+                    dateFormat: "dd-mm-yy"
+                });
+
+                $(".lista").chosen();
+            }
+
+            load_plugins();
+
+            var manager = Sys.WebForms.PageRequestManager.getInstance();
+
+            manager.add_endRequest(load_plugins);
+        });
+    </script>
 </asp:Content>

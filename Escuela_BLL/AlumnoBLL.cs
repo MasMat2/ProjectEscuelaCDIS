@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Escuela_DAL;
+using System.Transactions;
 
 namespace Escuela_BLL
 {
@@ -16,28 +17,41 @@ namespace Escuela_BLL
             return alumno.cargarAlumnos();
         }
 
-        public void agregarAlumno(Alumno pAlumno)
+        public void agregarAlumno(Alumno pAlumno, List<MateriaAlumno> listMaterias)
         {
             AlumnoDAL alumno = new AlumnoDAL();
-            DataTable dtAlumno = new DataTable();
+            Alumno alumnoCargado;
+            MateriaAlumnoBLL materiaAlumnoBLL = new MateriaAlumnoBLL();
 
-            dtAlumno = cargarAlumno(pAlumno.matricula);
 
-            if (dtAlumno.Rows.Count > 0)
+            alumnoCargado = cargarAlumno(pAlumno.matricula);
+
+            if (alumnoCargado != null)
             {
                 throw new Exception("La matricula ya existe en la base de datos.");
             }
             else
             {
-                int edad = DateTime.Now.Year - pAlumno.fechaNacimiento.Year;
-                if (edad > 80)
-                {
-                    throw new Exception("El alumno es demasiado viejo ingresa otra fecha de nacimiento.");
-                }
-                else
+                using(TransactionScope ts = new TransactionScope())
                 {
                     alumno.agregarAlumno(pAlumno);
+                    
+                    foreach(MateriaAlumno entity in listMaterias)
+                    {
+                        materiaAlumnoBLL.agregarMateriaAlumno(entity);
+                    }
+
+                    ts.Complete();
                 }
+                //int edad = DateTime.Now.Year - pAlumno.fechaNacimiento.Year;
+                //if (edad > 80)
+                //{
+                //    throw new Exception("El alumno es demasiado viejo ingresa otra fecha de nacimiento.");
+                //}
+                //else
+                //{
+                //    alumno.agregarAlumno(pAlumno);
+                //}
             }
         }
         public Alumno cargarAlumno(int matricula)
@@ -46,16 +60,38 @@ namespace Escuela_BLL
             return alumno.cargarAlumno(matricula);
         }
 
-        public void modificarAlumno(Alumno alumno)
+        public void modificarAlumno(Alumno pAlumno, List<MateriaAlumno> listMateriaAlumno)
         {
             AlumnoDAL alumno = new AlumnoDAL();
-            alumno.modificarAlumno(matricula, nombre, fechaNacimiento, semestre, facultad, ciudad);
+            MateriaAlumnoBLL materiaAlumnoBLL = new MateriaAlumnoBLL();
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                alumno.modificarAlumno(pAlumno);
+                materiaAlumnoBLL.eliminarEntidadesPorAlumno(pAlumno.matricula);
+
+                foreach (MateriaAlumno entity in listMateriaAlumno)
+                {
+                    materiaAlumnoBLL.agregarMateriaAlumno(entity);
+                }
+
+                ts.Complete();
+
+            }
         }
 
         public void eliminarAlumno(int matricula)
         {
             AlumnoDAL alumno = new AlumnoDAL();
-            alumno.eliminarAlumno(matricula);
+            MateriaAlumnoBLL materiaAlumnoBLL = new MateriaAlumnoBLL();
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                materiaAlumnoBLL.eliminarEntidadesPorAlumno(matricula);
+                alumno.eliminarAlumno(matricula);
+                ts.Complete();
+
+            }
         }
     }
 }

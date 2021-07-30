@@ -10,52 +10,69 @@ namespace Escuela_DAL
 {
     public class EstadoDAL
     {
-        public DataTable cargarEstados()
+        EscuelaEntities modelo;
+
+        public EstadoDAL()
         {
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+            modelo = new EscuelaEntities();
+        }
+        public List<Estado> cargarEstados()
+        {
+            var estados = from mEstado in modelo.Estado
+                            select mEstado;
 
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_cargarEstados";
-            command.Connection = connection;
+            return estados.AsEnumerable<Estado>().ToList();
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable dtEstados = new DataTable();
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
-            connection.Open();
+            //SqlCommand command = new SqlCommand();
+            //command.CommandType = CommandType.StoredProcedure;
+            //command.CommandText = "sp_cargarEstados";
+            //command.Connection = connection;
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dtEstados);
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //DataTable dtEstados = new DataTable();
 
-            connection.Close();
+            //connection.Open();
 
-            return dtEstados;
+            //adapter.SelectCommand = command;
+            //adapter.Fill(dtEstados);
+
+            //connection.Close();
+
+            //return dtEstados;
         }
 
-        public DataTable cargarEstadosPorPais(int pais)
+        public List<Estado> cargarEstadosPorPais(int pais)
         {
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+            var estados = from mEstado in modelo.Estado
+                          where mEstado.pais == pais
+                          select mEstado;
 
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_cargarEstadosPorPais";
-            command.Connection = connection;
+            return estados.AsEnumerable<Estado>().ToList();
 
-            command.Parameters.AddWithValue("pPais", pais);
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            DataTable dtCiudades = new DataTable();
+            //SqlCommand command = new SqlCommand();
+            //command.CommandType = CommandType.StoredProcedure;
+            //command.CommandText = "sp_cargarEstadosPorPais";
+            //command.Connection = connection;
 
-            connection.Open();
+            //command.Parameters.AddWithValue("pPais", pais);
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dtCiudades);
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //DataTable dtCiudades = new DataTable();
 
-            connection.Close();
+            //connection.Open();
 
-            return dtCiudades;
+            //adapter.SelectCommand = command;
+            //adapter.Fill(dtCiudades);
+
+            //connection.Close();
+
+            //return dtCiudades;
         }
     }
 }

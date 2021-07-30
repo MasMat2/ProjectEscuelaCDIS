@@ -5,29 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Escuela_DAL;
+using System.Transactions;
 
 namespace Escuela_BLL
 {
     public class FacultadBLL
     {
-        public DataTable cargarFacultades()
+        public List<object> cargarFacultades()
         {
             FacultadDAL facultad = new FacultadDAL();
             return facultad.cargarFacultades();
         }
-        public void agregarFacultad(string codigo, string nombre, DateTime fechaCreacion, int universidad, int ciudad)
+        public void agregarFacultad(Facultad pFacultad, List<MateriaFacultad> listMateriaFacultad)
         {
-            FacultadDAL facultad = new FacultadDAL();
-            DataTable dtFacultad = new DataTable();
+            FacultadDAL facultadDAL = new FacultadDAL();
+            Facultad facultadCargada;
+            MateriaFacultadBLL materiaFacultadBLL = new MateriaFacultadBLL();
 
-            dtFacultad = cargarFacultad(codigo);
-            if (dtFacultad.Rows.Count > 0)
+            facultadCargada = cargarFacultad(pFacultad.codigo);
+            if (facultadCargada != null)
             {
                 throw new Exception("El código de la facultad ya existe, introduce un código diferente");
             }
             else
             {
-                int ano = fechaCreacion.Year;
+                int ano = pFacultad.fechaCreacion.Year;
                 if (ano < 1900)
                 {
                     throw new Exception("Fecha no permitida, introduce una fecha mayor a 1900.");
@@ -38,29 +40,49 @@ namespace Escuela_BLL
                 }
                 else
                 {
-                    facultad.agregarFacultad(codigo, nombre, fechaCreacion, universidad, ciudad);
+
+                    using (TransactionScope ts = new TransactionScope())
+                    {
+                        facultadDAL.agregarFacultad(pFacultad);
+                        int facultad_id = facultadDAL.cargarFacultad(pFacultad.codigo).ID_Facultad;
+                        foreach (MateriaFacultad entity in listMateriaFacultad)
+                        {
+
+                            entity.facultad = facultad_id;
+                            materiaFacultadBLL.agregarMateriaFacultad(entity);
+                        }
+
+                        ts.Complete();
+                    }
                 }
-                
             }
         }
 
-        public DataTable cargarFacultad(string codigo)
+        public Facultad cargarFacultad(string codigo)
         {
             FacultadDAL facultad = new FacultadDAL();
             return facultad.cargarFacultad(codigo);
         }
 
-        public void modificarFacultad(string codigo, string nombre, DateTime fechaCreacion, int universidad)
+        public void modificarFacultad(Facultad pFacultad)
         {
             FacultadDAL facultad = new FacultadDAL();
-            facultad.modificarFacultad(codigo, nombre, fechaCreacion, universidad);
+            facultad.modificarFacultad(pFacultad);
         }
 
         public void eliminarFacultad(string codigo)
         {
-            FacultadDAL facultad = new FacultadDAL();
-            facultad.eliminarFacultad(codigo);
+            FacultadDAL facultadDAL = new FacultadDAL();
+            MateriaFacultadBLL materiaFacultadBLL = new MateriaFacultadBLL();
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                materiaFacultadBLL.eliminarEntidadesPorFacultad(codigo);
+                facultadDAL.eliminarFacultad(codigo);
+                ts.Complete();
+
+            }
         }
     }
- 
+
 }

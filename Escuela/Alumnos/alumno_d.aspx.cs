@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Escuela_BLL;
+using Escuela_DAL;
 
 namespace Escuela.Alumnos
 {
@@ -41,25 +42,35 @@ namespace Escuela.Alumnos
         public void cargarAlumno(int matricula)
         {
             AlumnoBLL alumBLL = new AlumnoBLL();
-            DataTable dtAlumno = new DataTable();
+            Alumno alumno = new Alumno();
 
-            dtAlumno = alumBLL.cargarAlumno(matricula);
+            alumno = alumBLL.cargarAlumno(matricula);
 
-            lblMatricula.Text = dtAlumno.Rows[0]["matricula"].ToString();
-            lblNombre.Text = dtAlumno.Rows[0]["nombre"].ToString();
-            lblFechaNacimiento.Text = dtAlumno.Rows[0]["fechaNacimiento"].ToString().Substring(0, 10);
-            lblSemestre.Text = dtAlumno.Rows[0]["semestre"].ToString();
-            ddlFacultad.SelectedValue = dtAlumno.Rows[0]["facultad"].ToString();
+            lblMatricula.Text = alumno.matricula.ToString();
+            lblNombre.Text = alumno.nombre.ToString();
+            lblFechaNacimiento.Text = alumno.fechaNacimiento.ToString().Substring(0, 10);
+            lblSemestre.Text = alumno.semestre.ToString();
+            ddlFacultad.SelectedValue = alumno.facultad.ToString();
+
+            cargarMaterias();
+            List<MateriaAlumno> listMateriaAlumno;
+            listMateriaAlumno = alumno.MateriaAlumno.ToList();
+
+            foreach (MateriaAlumno materiaAlumno in listMateriaAlumno)
+            {
+                listBoxMaterias.Items.FindByValue(materiaAlumno.materia.ToString()).Selected = true;
+            }
+            listBoxMaterias.Attributes.Add("disabled", "");
         }
 
         public void cargarFacultades()
         {
             FacultadBLL facuBLL = new FacultadBLL();
-            DataTable dtFacultades = new DataTable();
+            List<object> listFacultades;
 
-            dtFacultades = facuBLL.cargarFacultades();
+            listFacultades = facuBLL.cargarFacultades();
 
-            ddlFacultad.DataSource = dtFacultades;
+            ddlFacultad.DataSource = listFacultades;
             ddlFacultad.DataTextField = "nombre";
             ddlFacultad.DataValueField = "ID_Facultad";
             ddlFacultad.DataBind();
@@ -73,6 +84,19 @@ namespace Escuela.Alumnos
             int matricula = int.Parse(lblMatricula.Text);
 
             alumBLL.eliminarAlumno(matricula);
+        }
+
+        public void cargarMaterias()
+        {
+            MateriaBLL materia = new MateriaBLL();
+            List<Materia> listMaterias;
+
+            listMaterias = materia.cargarMaterias();
+
+            listBoxMaterias.DataSource = listMaterias;
+            listBoxMaterias.DataTextField = "nombre";
+            listBoxMaterias.DataValueField = "ID_Materia";
+            listBoxMaterias.DataBind();
         }
 
         public bool sessionIniciada()

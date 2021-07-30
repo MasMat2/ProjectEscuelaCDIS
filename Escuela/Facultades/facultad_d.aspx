@@ -32,12 +32,35 @@
                 <asp:DropDownList ID="ddlCiudad" runat="server" Enabled="false"></asp:DropDownList>
             </td>
         </tr>
+        <tr>
+            <td>Materias: </td>
+            <td>
+                <asp:ListBox ID="listBoxMaterias" runat="server" SelectionMode="Multiple" CssClass="lista" Width="150px"></asp:ListBox>
+            </td>
+        </tr>
 
     </table>
-    <%--  <tr>
-            <td></td>
-            <td>--%>
     <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
-    <%-- </td>
-        </tr>--%>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function load_plugins() {
+                $("#MainContent_txtFechaCreacion").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "1900:2010",
+                    dateFormat: "dd-mm-yy"
+                });
+
+                $(".lista").chosen();
+            }
+
+            load_plugins();
+
+            var manager = Sys.WebForms.PageRequestManager.getInstance();
+
+            manager.add_endRequest(load_plugins);
+        });
+    </script>
 </asp:Content>

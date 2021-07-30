@@ -10,13 +10,13 @@ namespace Escuela_BLL
 {
     public class EstadoBLL
     {
-        public DataTable cargarEstados()
+        public List<Estado> cargarEstados()
         {
             EstadoDAL estado = new EstadoDAL();
             return estado.cargarEstados();
         }
 
-        public DataTable cargarEstadosPorPais(int pais)
+        public List<Estado> cargarEstadosPorPais(int pais)
         {
             EstadoDAL estado = new EstadoDAL();
             return estado.cargarEstadosPorPais(pais);

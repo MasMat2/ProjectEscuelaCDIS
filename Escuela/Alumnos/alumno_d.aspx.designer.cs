@@ -60,12 +60,21 @@ namespace Escuela.Alumnos
         protected global::System.Web.UI.WebControls.DropDownList ddlFacultad;
 
         /// <summary>
-        /// btnEliminar control.
+        /// listBoxMaterias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
+        protected global::System.Web.UI.WebControls.ListBox listBoxMaterias;
+
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

@@ -110,6 +110,7 @@
     <Content Include="Alumnos\alumno_s.aspx" />
     <Content Include="Alumnos\alumno_u.aspx" />
     <Content Include="App_Themes\Theme2\Site2.css" />
+    <Content Include="Acode notes.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -135,6 +136,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Login.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -268,6 +270,13 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -288,6 +297,10 @@
     <ProjectReference Include="..\Escuela_BLL\Escuela_BLL.csproj">
       <Project>{8d311592-3d66-45e1-bc15-a3ddfe056a07}</Project>
       <Name>Escuela_BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Escuela_DAL\Escuela_DAL.csproj">
+      <Project>{495C39B8-8A65-4EB3-A44F-5FF302AC6FD3}</Project>
+      <Name>Escuela_DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

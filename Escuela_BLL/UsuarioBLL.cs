@@ -10,7 +10,7 @@ namespace Escuela_BLL
 {
     public class UsuarioBLL
     {
-        public DataTable consultarUsuario(string nombre, string contrasena)
+        public Usuario consultarUsuario(string nombre, string contrasena)
         {
             UsuarioDAL usuario = new UsuarioDAL();
             return usuario.consultarUsuario(nombre, contrasena);
