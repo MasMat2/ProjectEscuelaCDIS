@@ -94,7 +94,17 @@ namespace Escuela.Facultades
             FacultadBLL facuBLL = new FacultadBLL();
             /*move to class state*/
             string codigo = Request.QueryString["pCodigo"];
-            facuBLL.eliminarFacultad(codigo);
+            
+
+            try
+            {
+                facuBLL.eliminarFacultad(codigo);
+            }
+            catch (Exception ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Alta", String.Format("alert('{0}')", ex.Message), true);
+            }
+
         }
         public bool sessionIniciada()
         {

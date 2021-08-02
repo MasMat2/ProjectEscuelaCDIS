@@ -37,7 +37,7 @@ namespace Escuela.Facultades
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             agregarFacultad();
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "Alta", "alert('Universidad agregada exitosamente.')", true);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Alta", "alert('Facultad agregada exitosamente.')", true);
         }
 
         protected void ddlPais_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,18 +91,19 @@ namespace Escuela.Facultades
                 }
 
                 facuBLL.agregarFacultad(facultadObject, listMateriaFacultad);
-                limpiarCampos();
-
-                DataTable dtAlumnos = new DataTable();
-                dtAlumnos = (DataTable)ViewState["tablaFacultades"];
-                dtAlumnos.Rows.Add(facultadObject.codigo, facultadObject.nombre);
-                grd_facultades.DataSource = dtAlumnos;
-                grd_facultades.DataBind();
             }
             catch (Exception ex)
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Alta", String.Format("alert('{0}')", ex.Message), true);
             }
+
+            limpiarCampos();
+
+            DataTable dtAlumnos = new DataTable();
+            dtAlumnos = (DataTable)ViewState["tablaFacultades"];
+            dtAlumnos.Rows.Add(facultadObject.codigo, facultadObject.nombre);
+            grd_facultades.DataSource = dtAlumnos;
+            grd_facultades.DataBind();
 
         }
 
@@ -187,9 +188,10 @@ namespace Escuela.Facultades
             txtNombre.Text = "";
             txtFechaCreacion.Text = "";
             ddlUniversidad.SelectedValue = "0";
-            ddlPais.SelectedValue = "0";
-            ddlEstado.SelectedValue = "0";
-            ddlCiudad.SelectedValue = "0";
+            cargarPaises();
+            cargarEstados();
+            cargarCiudades();
+            cargarMaterias();
 
         }
 

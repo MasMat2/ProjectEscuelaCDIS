@@ -76,6 +76,5 @@ C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.pdb
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.pdb
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\EntityFramework.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll.config
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\EntityFramework.xml

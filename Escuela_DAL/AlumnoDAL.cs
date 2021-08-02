@@ -30,52 +30,12 @@ namespace Escuela_DAL
                           };
 
             return alumnos.AsEnumerable<object>().ToList();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_cargarAlumnos";
-            //command.Connection = connection;
-
-            //SqlDataAdapter adapter = new SqlDataAdapter();
-            //DataTable dtAlumnos = new DataTable();
-
-            //connection.Open();
-
-            //adapter.SelectCommand = command;
-            //adapter.Fill(dtAlumnos);
-
-            //connection.Close();
-
-            //return dtAlumnos;
         }
 
         public void agregarAlumno(Alumno pAlumno)
         {
             modelo.Alumno.Add(pAlumno);
             modelo.SaveChanges();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_agregarAlumno";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pMatricula", matricula);
-            //command.Parameters.AddWithValue("pNombre", nombre);
-            //command.Parameters.AddWithValue("pFecha", fechaNacimiento);
-            //command.Parameters.AddWithValue("pSemestre", semestre);
-            //command.Parameters.AddWithValue("pFacultad", facultad);
-            //command.Parameters.AddWithValue("pCiudad", ciudad);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
-
         }
 
         public Alumno cargarAlumno(int matricula)
@@ -85,27 +45,15 @@ namespace Escuela_DAL
                           select mAlumno).FirstOrDefault();
 
             return alumno;
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
+        }
 
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_cargarAlumnoPorMatricula";
-            //command.Connection = connection;
+        public List<Alumno> cargarAlumnosPorFacultad(string codigo)
+        {
+            var alumnos = from mAlumno in modelo.Alumno
+                          where mAlumno.Facultad1.codigo == codigo
+                          select mAlumno;
 
-            //command.Parameters.AddWithValue("pMatricula", matricula);
-
-            //SqlDataAdapter adapter = new SqlDataAdapter();
-            //DataTable dtAlumno = new DataTable();
-
-            //connection.Open();
-
-            //adapter.SelectCommand = command;
-            //adapter.Fill(dtAlumno);
-
-            //connection.Close();
-
-            //return dtAlumno;
+            return alumnos.AsEnumerable<Alumno>().ToList();
         }
 
         public void modificarAlumno(Alumno pAlumno)
@@ -121,26 +69,6 @@ namespace Escuela_DAL
             alumno.ciudad = pAlumno.ciudad;
 
             modelo.SaveChanges();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_modificarAlumno";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pMatricula", matricula);
-            //command.Parameters.AddWithValue("pNombre", nombre);
-            //command.Parameters.AddWithValue("pFecha", fechaNacimiento);
-            //command.Parameters.AddWithValue("pSemestre", semestre);
-            //command.Parameters.AddWithValue("pFacultad", facultad);
-            //command.Parameters.AddWithValue("pCiudad", ciudad);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
         }
 
         public void eliminarAlumno(int matricula)
@@ -151,21 +79,6 @@ namespace Escuela_DAL
 
             modelo.Alumno.Remove(alumno);
             modelo.SaveChanges();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_eliminarAlumno";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pMatricula", matricula);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
         }
     }
 

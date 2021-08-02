@@ -32,25 +32,6 @@ namespace Escuela_DAL
                              };
 
             return facultades.AsEnumerable<object>().ToList();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_cargarFacultades";
-            //command.Connection = connection;
-
-            //SqlDataAdapter adapter = new SqlDataAdapter();
-            //DataTable dtFacultades = new DataTable();
-
-            //connection.Open();
-
-            //adapter.SelectCommand = command;
-            //adapter.Fill(dtFacultades);
-
-            //connection.Close();
-
-            //return dtFacultades;
 
         }
         public void agregarFacultad(Facultad Facultad)
@@ -58,27 +39,6 @@ namespace Escuela_DAL
 
             modelo.Facultad.Add(Facultad);
             modelo.SaveChanges();
-
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_agregarFacultad";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pCodigo", codigo);
-            //command.Parameters.AddWithValue("pNombre", nombre);
-            //command.Parameters.AddWithValue("pFecha", fechaCreacion);
-            //command.Parameters.AddWithValue("pUniversidad", universidad);
-            //command.Parameters.AddWithValue("pCiudad", ciudad);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
-
         }
 
         public Facultad cargarFacultad(string codigo)
@@ -88,28 +48,6 @@ namespace Escuela_DAL
                            select mFacultad).FirstOrDefault();
 
             return facultad;
-
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_cargarFacultad";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pCodigo", codigo);
-
-            //SqlDataAdapter adapter = new SqlDataAdapter();
-            //DataTable dtFacultad = new DataTable();
-
-            //connection.Open();
-
-            //adapter.SelectCommand = command;
-            //adapter.Fill(dtFacultad);
-
-            //connection.Close();
-
-            //return dtFacultad;
         }
 
         public void modificarFacultad(Facultad pFacultad)
@@ -126,24 +64,6 @@ namespace Escuela_DAL
             facultad.ciudad = facultad.ciudad;
 
             modelo.SaveChanges();
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_modificarFacultad";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pCodigo", codigo);
-            //command.Parameters.AddWithValue("pNombre", nombre);
-            //command.Parameters.AddWithValue("pFechaCreacion", fechaCreacion);
-            //command.Parameters.AddWithValue("pUniversidad", universidad);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
         }
 
         public void eliminarFacultad(string codigo)
@@ -155,22 +75,6 @@ namespace Escuela_DAL
 
             modelo.Facultad.Remove(facultad);
             modelo.SaveChanges();
-
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = @"Server=DESKTOP-98VGB3G;Database=Escuela;Trusted_connection=true";
-
-            //SqlCommand command = new SqlCommand();
-            //command.CommandType = CommandType.StoredProcedure;
-            //command.CommandText = "sp_eliminarFacultad";
-            //command.Connection = connection;
-
-            //command.Parameters.AddWithValue("pCodigo", codigo);
-
-            //connection.Open();
-
-            //command.ExecuteNonQuery();
-
-            //connection.Close();
         }
     }
 }

@@ -112,8 +112,21 @@ namespace Escuela.Facultades
             facultadObject.universidad = int.Parse(ddlUniversidad.SelectedValue);
             facultadObject.ciudad = int.Parse(ddlCiudad.SelectedValue);
 
+            MateriaFacultad materiaFacultad;
+            List<MateriaFacultad> listMateriaFacultad = new List<MateriaFacultad>();
 
-            facuBLL.modificarFacultad(facultadObject);
+            foreach (ListItem item in listBoxMaterias.Items)
+            {
+                if (item.Selected)
+                {
+                    materiaFacultad = new MateriaFacultad();
+                    materiaFacultad.materia = int.Parse(item.Value);
+                    listMateriaFacultad.Add(materiaFacultad);
+                }
+            }
+
+
+            facuBLL.modificarFacultad(facultadObject, listMateriaFacultad);
         }
 
         public void cargarPaises()

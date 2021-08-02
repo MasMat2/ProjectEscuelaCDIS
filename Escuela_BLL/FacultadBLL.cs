@@ -44,11 +44,11 @@ namespace Escuela_BLL
                     using (TransactionScope ts = new TransactionScope())
                     {
                         facultadDAL.agregarFacultad(pFacultad);
-                        int facultad_id = facultadDAL.cargarFacultad(pFacultad.codigo).ID_Facultad;
+                        //int facultad_id = facultadDAL.cargarFacultad(pFacultad.codigo).ID_Facultad;
                         foreach (MateriaFacultad entity in listMateriaFacultad)
                         {
 
-                            entity.facultad = facultad_id;
+                            entity.facultad = pFacultad.ID_Facultad;
                             materiaFacultadBLL.agregarMateriaFacultad(entity);
                         }
 
@@ -64,16 +64,42 @@ namespace Escuela_BLL
             return facultad.cargarFacultad(codigo);
         }
 
-        public void modificarFacultad(Facultad pFacultad)
+        public void modificarFacultad(Facultad pFacultad, List<MateriaFacultad> listMateriaFacultad)
         {
-            FacultadDAL facultad = new FacultadDAL();
-            facultad.modificarFacultad(pFacultad);
+            FacultadDAL facultadDAL = new FacultadDAL();
+            MateriaFacultadBLL materiaFacultadBLL = new MateriaFacultadBLL();
+            using (TransactionScope ts = new TransactionScope())
+            {
+                facultadDAL.modificarFacultad(pFacultad);
+                int facultad_id = facultadDAL.cargarFacultad(pFacultad.codigo).ID_Facultad;
+
+                materiaFacultadBLL.eliminarEntidadesPorFacultad(pFacultad.codigo);
+
+                foreach (MateriaFacultad entity in listMateriaFacultad)
+                {
+                    entity.facultad = facultad_id;
+                    materiaFacultadBLL.agregarMateriaFacultad(entity);
+                }
+
+                ts.Complete();
+
+            }
         }
 
         public void eliminarFacultad(string codigo)
         {
             FacultadDAL facultadDAL = new FacultadDAL();
             MateriaFacultadBLL materiaFacultadBLL = new MateriaFacultadBLL();
+
+
+            AlumnoDAL alumnoDAL = new AlumnoDAL();
+            List<Alumno> listAlumno;
+
+            listAlumno = alumnoDAL.cargarAlumnosPorFacultad(codigo);
+            if (listAlumno.Count != 0)
+            {
+                throw new Exception("Aun existen alumnos inscritos a esta facultad. La facultad no puede ser eliminada.");
+            }
 
             using (TransactionScope ts = new TransactionScope())
             {

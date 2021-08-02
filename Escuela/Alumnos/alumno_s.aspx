@@ -23,7 +23,23 @@
             <asp:BoundField HeaderText="Facultad" DataField="nombreFacultad"/>
             <asp:BoundField HeaderText="Ciudad" DataField="nombreCiudad"/>
         </Columns>
-
     </asp:GridView>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '<%= ResolveUrl("~/ServicioWCFAlumnos.svc/consultaAlumnosJSON") %>',
+                success: function (data) {
+                    console.log("LLamada de AJAX exitosa");
+                    console.log(data);
+                },
+                error: function (e) {
+                    console.log("LLamada de AJAX fallida");
+                    console.log(e);
+                },
+            });
+            //var myres = $get("consultaAlumnosJSON");
+            //console.log(myres);
+        })
+    </script>
 </asp:Content>
