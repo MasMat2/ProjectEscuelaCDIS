@@ -30,7 +30,7 @@ namespace Escuela
         //         WebOperationContext.Current.OutgoingResponse.ContentType = "text/xml";
 
         //[WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "/consultaAlumnosJSON")]
-        [WebGet]
+        [WebGet(ResponseFormat=WebMessageFormat.Json)]
         [OperationContract]
         public string consultaAlumnosJSON()
         {
@@ -39,6 +39,10 @@ namespace Escuela
                           {
                               matricula = mAlumnos.matricula,
                               nombre = mAlumnos.nombre,
+                              fechaNacimiento = mAlumnos.fechaNacimiento,
+                              semestre = mAlumnos.semestre,
+                              nombreFacultad = mAlumnos.Facultad1.nombre,
+                              nombreCiudad = mAlumnos.Ciudad1.nombre
                           };
 
             return (new JavaScriptSerializer().Serialize(alumnos.AsEnumerable<object>().ToList()));

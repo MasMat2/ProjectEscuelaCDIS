@@ -53,6 +53,8 @@ C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\roslyn\VBCSCompiler.exe.co
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Antlr3.Runtime.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\AspNet.ScriptManager.bootstrap.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.dll
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Microsoft.AspNet.FriendlyUrls.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
@@ -62,6 +64,9 @@ C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Microsoft.Web.Infrastructu
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Newtonsoft.Json.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\System.Web.Optimization.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\WebGrease.dll
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.pdb
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.pdb
+C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll.config
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\System.Web.Optimization.xml
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Newtonsoft.Json.xml
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Antlr3.Runtime.pdb
@@ -72,9 +77,3 @@ C:\Users\James\Documents\CDIS\Actividad_5\Escuela\obj\Debug\Escuela.csproj.CoreC
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\obj\Debug\Escuela.csproj.CopyComplete
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\obj\Debug\Escuela.dll
 C:\Users\James\Documents\CDIS\Actividad_5\Escuela\obj\Debug\Escuela.pdb
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.dll
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_BLL.pdb
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.pdb
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\Escuela_DAL.dll.config
-C:\Users\James\Documents\CDIS\Actividad_5\Escuela\bin\EntityFramework.xml

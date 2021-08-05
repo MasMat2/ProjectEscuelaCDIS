@@ -20,7 +20,7 @@ namespace Escuela.Alumnos
                 if (sessionIniciada()) 
                 { 
                     grd_alumnos.DataSource = cargarAlumnos();
-                    grd_alumnos.DataBind();
+                    //grd_alumnos.DataBind();
                 }
                 else
                 {

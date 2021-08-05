@@ -4,24 +4,24 @@
 
     <asp:GridView ID="grd_alumnos" runat="server" AutoGenerateColumns="false" OnRowCommand="grd_alumnos_RowCommand" CssClass="table table-bordered custom_tables">
         <Columns>
-            <asp:TemplateField>
+            <%--<asp:TemplateField>
                 <ItemTemplate>
-                    <asp:ImageButton ID="btnEditar" runat="server" imageUrl="~/Images/pencil.png" Height="20px" Width="20px"
-                        CommandName="Editar" CommandArgument='<%# Eval("matricula") %>'/>
+                    <asp:ImageButton ID="btnEditar" runat="server" ImageUrl="~/Images/pencil.png" Height="20px" Width="20px"
+                        CommandName="Editar" CommandArgument='<%# Eval("matricula") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField>
                 <ItemTemplate>
-                    <asp:ImageButton ID="btnEliminar" runat="server" imageUrl="~/Images/trash.png" Height="20px" Width="20px"
-                        CommandName="Eliminar" CommandArgument='<%# Eval("matricula") %>'/>
+                    <asp:ImageButton ID="btnEliminar" runat="server" ImageUrl="~/Images/trash.png" Height="20px" Width="20px"
+                        CommandName="Eliminar" CommandArgument='<%# Eval("matricula") %>' />
                 </ItemTemplate>
-            </asp:TemplateField>
-            <asp:BoundField HeaderText="Matricula" DataField="matricula"/>
-            <asp:BoundField HeaderText="Nombre" DataField="nombre"/>
-            <asp:BoundField HeaderText="Fecha de Nacimiento" DataField="fechaNacimiento" DataFormatString="{0:dd/MM/yyyy}"/>
-            <asp:BoundField HeaderText="Semestre" DataField="semestre"/>
-            <asp:BoundField HeaderText="Facultad" DataField="nombreFacultad"/>
-            <asp:BoundField HeaderText="Ciudad" DataField="nombreCiudad"/>
+            </asp:TemplateField>--%>
+            <asp:BoundField HeaderText="Matricula" DataField="matricula" />
+            <asp:BoundField HeaderText="Nombre" DataField="nombre" />
+            <asp:BoundField HeaderText="Fecha de Nacimiento" DataField="fechaNacimiento" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField HeaderText="Semestre" DataField="semestre" />
+            <asp:BoundField HeaderText="Facultad" DataField="nombreFacultad" />
+            <asp:BoundField HeaderText="Ciudad" DataField="nombreCiudad" />
         </Columns>
     </asp:GridView>
     <script type="text/javascript">
@@ -32,14 +32,31 @@
                 success: function (data) {
                     console.log("LLamada de AJAX exitosa");
                     console.log(data);
+                    table = `<table class="table table-bordered custom_tables" cellspacing="0" rules="all" border="1" id="MainContent_grd_alumnos" style="border-collapse:collapse;">
+                    <tbody><tr>
+                        <th scope="col">Matricula</th><th scope="col">Nombre</th><th scope="col">Fecha de Nacimiento</th><th scope="col">Semestre</th><th scope="col">Facultad</th><th scope="col">Ciudad</th>
+                    </tr>`
+                    alumnos = JSON.parse(data);
+                   for (alumno of alumnos) {
+                       table += `<tr>
+                        <td>${alumno.matricula}</td>
+                        <td>${alumno.nombre}</td>
+                        <td>${alumno.fechaNacimiento}</td>
+                        <td>${alumno.semestre}</td>
+                        <td>${alumno.nombreFacultad}</td>
+                        <td>${alumno.nombreCiudad}</td>
+                        </tr>`
+                        
+                    }
+                    table += `</tbody ></table >`
+                    contentRef = document.getElementsByClassName("body-content")[0];
+                    contentRef.innerHTML = table;
                 },
                 error: function (e) {
                     console.log("LLamada de AJAX fallida");
                     console.log(e);
                 },
             });
-            //var myres = $get("consultaAlumnosJSON");
-            //console.log(myres);
         })
     </script>
 </asp:Content>
