@@ -64,7 +64,7 @@ namespace Escuela.Alumnos
             ddlFacultad.SelectedValue = alumno.facultad.ToString();
 
             cargarEstados();
-            ddlEstado.SelectedValue = alumno.Ciudad1.ToString();
+            ddlEstado.SelectedValue = alumno.Ciudad1.estado.ToString();
 
             cargarCiudades();
             ddlCiudad.SelectedValue = alumno.ciudad.ToString();

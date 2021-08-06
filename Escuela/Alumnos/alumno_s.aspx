@@ -28,25 +28,46 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: '<%= ResolveUrl("~/ServicioWCFAlumnos.svc/consultaAlumnosJSON") %>',
+                url: '<%= ResolveUrl("~/ServicioWCFEscuela.svc/consultaAlumnosJSON") %>',
                 success: function (data) {
                     console.log("LLamada de AJAX exitosa");
                     console.log(data);
-                    table = `<table class="table table-bordered custom_tables" cellspacing="0" rules="all" border="1" id="MainContent_grd_alumnos" style="border-collapse:collapse;">
-                    <tbody><tr>
-                        <th scope="col">Matricula</th><th scope="col">Nombre</th><th scope="col">Fecha de Nacimiento</th><th scope="col">Semestre</th><th scope="col">Facultad</th><th scope="col">Ciudad</th>
-                    </tr>`
+                    table = `<table class="table table-bordered custom_tables" cellspacing="0" rules="all" border="1" id="MainContent_grd_alumnos"
+                    style="border-collapse:collapse;">
+                    <tbody>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Matricula</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Fecha de Nacimiento</th>
+                            <th scope="col">Semestre</th>
+                            <th scope="col">Facultad</th>
+                            <th scope="col">Ciudad</th>
+                        </tr>`
                     alumnos = JSON.parse(data);
-                   for (alumno of alumnos) {
-                       table += `<tr>
+                    for (alumno of alumnos) {
+                        timestamp = alumno.fechaNacimiento.match(/\((-?\d+)\)/)[1];
+                        date = new Date(parseInt(timestamp));
+                        console.log(date);
+                        dateName = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+                        table += `<tr>
+                            <td>
+                                <a href="/Alumnos/alumno_u?pMatricula=${alumno.matricula}"><img src="../Images/pencil.png"
+                                        style="height:20px;width:20px;"></a>
+                            </td>
+                            <td>
+                                <a href="/Alumnos/alumno_d?pMatricula=${alumno.matricula}"><img src="../Images/trash.png"
+                                        style="height:20px;width:20px;"></a>
+                            </td>
                         <td>${alumno.matricula}</td>
                         <td>${alumno.nombre}</td>
-                        <td>${alumno.fechaNacimiento}</td>
+                        <td>${dateName}</td>
                         <td>${alumno.semestre}</td>
                         <td>${alumno.nombreFacultad}</td>
                         <td>${alumno.nombreCiudad}</td>
                         </tr>`
-                        
+
                     }
                     table += `</tbody ></table >`
                     contentRef = document.getElementsByClassName("body-content")[0];

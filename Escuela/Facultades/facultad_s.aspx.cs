@@ -20,7 +20,7 @@ namespace Escuela.Facultades
                 if (sessionIniciada())
                 {
                     grd_facultades.DataSource = cargarFacultades();
-                    grd_facultades.DataBind();
+                    //grd_facultades.DataBind();
                 }
                 else
                 {
