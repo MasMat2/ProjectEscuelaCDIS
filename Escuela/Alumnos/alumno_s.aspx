@@ -28,7 +28,7 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: '<%= ResolveUrl("~/ServicioWCFAlumnos.svc/consultaAlumnosJSON") %>',
+                url: '<%= ResolveUrl("~/ServicoWCFEscuela.svc/consultaAlumnosJSON") %>',
                 success: function (data) {
                     console.log("LLamada de AJAX exitosa");
                     console.log(data);

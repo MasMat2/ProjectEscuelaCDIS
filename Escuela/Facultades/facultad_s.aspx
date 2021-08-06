@@ -23,4 +23,55 @@
             <asp:BoundField HeaderText="Ciudad" DataField="nombreCiudad"/>
         </Columns>
         </asp:GridView>
+
+      <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '<%= ResolveUrl("~/ServicoWCFEscuela.svc/consultaFacultadesJSON") %>',
+                success: function (data) {
+                    console.log("LLamada de AJAX exitosa");
+                    console.log(data);
+                    table = `<table class="table table-bordered custom_tables" cellspacing="0" rules="all" border="1" id="MainContent_grd_facultades"
+                    style="border-collapse:collapse;">
+                    <tbody>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Fecha de Creacion</th>
+                            <th scope="col">Universidad</th>
+                            <th scope="col">Ciudad</th>
+                        </tr>`
+                    facultades = JSON.parse(data);
+                   for (facultad of facultades) {
+                       table += `<tr>
+                        <td>
+                            <a href="/Facultades/facultad_u?pCodigo=${facultad.codigo}"><img src="../Images/pencil.png"
+                                    style="height:20px;width:20px;"></a>
+                        </td>
+                        <td>
+                            <a href="/Facultades/facultad_d?pCodigo=${facultad.codigo}"><img src="../Images/trash.png"
+                                    style="height:20px;width:20px;"></a>
+                        </td>
+                        <td>${facultad.codigo}</td>
+                        <td>${facultad.nombre}</td>
+                        <td>${facultad.fechaCreacion}</td>
+                        <td>${facultad.universidad}/td>
+                        <td>${facultad.nombreCiudad}</td>
+                    </tr>`
+                        
+                    }
+                    table += `</tbody ></table >`
+                    contentRef = document.getElementsByClassName("body-content")[0];
+                    contentRef.innerHTML = table;
+                },
+                error: function (e) {
+                    console.log("LLamada de AJAX fallida");
+                    console.log(e);
+                },
+            });
+        })
+      </script>
 </asp:Content>
